@@ -1,0 +1,42 @@
+﻿@model University1.Record
+
+@{
+    ViewBag.Title = "Подробнее";
+}
+
+<h2>Подробнее</h2>
+
+<div>
+    <h4>Запись</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Завершен
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Passed)
+        </dd>
+
+        <dt>
+            Имя студента
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.Name)
+        </dd>
+
+        <dt>
+            Название курса
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Сourse.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Вернуться к списку", "Index")
+</p>

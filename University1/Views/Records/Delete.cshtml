@@ -1,0 +1,48 @@
+﻿@model University1.Record
+
+@{
+    ViewBag.Title = "Удаление";
+}
+
+<h2>Удаление</h2>
+
+<h3>Вы уверены, что хотите удалить запись?</h3>
+<div>
+    <h4>Запись</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Завершен
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Passed)
+        </dd>
+
+        <dt>
+           Имя студента
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.Name)
+        </dd>
+
+        <dt>
+            Название курса
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Сourse.Name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Удалить" class="btn btn-default" /> |
+            @Html.ActionLink("Вернуться к списку", "Index")
+        </div>
+    }
+</div>

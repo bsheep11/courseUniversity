@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Главная страница";
+}
+@if (User.IsInRole("Admin") || User.IsInRole("Student") || User.IsInRole("Teacher"))
+{
+    <div class="jumbotron">
+        <h1>Курсы</h1>
+        <p class="lead">Перейти к списку доступных курсов</p>
+        <p><a href="~/Course" class="btn btn-primary btn-lg">Перейти &raquo;</a></p>
+    </div>
+
+    if (User.IsInRole("Teacher") || User.IsInRole("Admin"))
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Страница записей</h2>
+                <p>
+
+                </p>
+                <p><a class="btn btn-default" href="~/Records">Перейти &raquo;</a></p>
+            </div>
+        </div>
+    }
+
+    if (User.IsInRole("Admin"))
+    {
+        <li>Only the admin can see this menu item</li>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Страница студентов</h2>
+                <p>
+
+                </p>
+                <p><a class="btn btn-default" href="~/Students">Перейти &raquo;</a></p>
+            </div>
+            <div class="col-md-4">
+                <h2>Страница преподавателей</h2>
+                <p>
+
+                </p>
+                <p><a class="btn btn-default" href="~/Teachers">Перейти &raquo;</a></p>
+            </div>
+        </div>
+    }
+
+}
+
+
+

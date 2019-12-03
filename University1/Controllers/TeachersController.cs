@@ -148,10 +148,18 @@ namespace University1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Teacher teacher = db.Teacher.Find(id);
-            db.Teacher.Remove(teacher);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Teacher teacher = db.Teacher.Find(id);
+                db.Teacher.Remove(teacher);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
 
         protected override void Dispose(bool disposing)

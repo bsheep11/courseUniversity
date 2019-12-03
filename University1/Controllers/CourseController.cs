@@ -115,10 +115,18 @@ namespace University1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Сourse Course = await db.Сourse.FindAsync(id);
-            db.Сourse.Remove(Course);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            try
+            {
+                Сourse Course = await db.Сourse.FindAsync(id);
+                db.Сourse.Remove(Course);
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
 
         protected override void Dispose(bool disposing)

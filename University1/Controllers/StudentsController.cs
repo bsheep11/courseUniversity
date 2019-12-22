@@ -118,7 +118,7 @@ namespace University1.Controllers
                 db.SaveChanges();
                 IList<string> listRoles = await _app.GetRolesAsync(student.UserID);
                 await _app.RemoveFromRolesAsync(student.UserID, listRoles.ToArray());
-                await _app.AddToRoleAsync(student.UserID, "Teacher");
+                await _app.AddToRoleAsync(student.UserID, "Student");
                 return RedirectToAction("Index");
             }
             return View(student);

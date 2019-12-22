@@ -18,6 +18,7 @@ namespace University1
         public Student()
         {
             this.Record = new HashSet<Record>();
+            this.PassTheTest = new HashSet<PassTheTest>();
         }
     
         public int Id { get; set; }
@@ -28,5 +29,7 @@ namespace University1
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Record> Record { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PassTheTest> PassTheTest { get; set; }
     }
 }

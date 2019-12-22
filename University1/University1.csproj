@@ -175,19 +175,28 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ApplicationUsersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ListAllTestsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PassTheTestsController.cs" />
     <Compile Include="Controllers\RecordsController.cs" />
     <Compile Include="Controllers\StudentsController.cs" />
+    <Compile Include="Controllers\TakeTestController.cs" />
     <Compile Include="Controllers\TeachersController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\TestQuestionsController.cs" />
+    <Compile Include="Controllers\CourseTestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\QueAndAns.cs" />
+    <Compile Include="PassTheTest.cs">
+      <DependentUpon>UniversityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Record.cs">
       <DependentUpon>UniversityModel.tt</DependentUpon>
@@ -199,10 +208,12 @@
     <Compile Include="Teacher.cs">
       <DependentUpon>UniversityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Tests\TestCourseController.cs" />
-    <Compile Include="Tests\TestStudentsController.cs" />
-    <Compile Include="Tests\TestRecordsController.cs" />
-    <Compile Include="Tests\TestTeachersController.cs" />
+    <Compile Include="Test.cs">
+      <DependentUpon>UniversityModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TestQuestions.cs">
+      <DependentUpon>UniversityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="UniversityModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -265,8 +276,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -315,7 +324,25 @@
     <Content Include="Views\Records\Details.cshtml" />
     <Content Include="Views\Records\Edit.cshtml" />
     <Content Include="Views\Records\Index.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\TestQuestions\Create.cshtml" />
+    <Content Include="Views\TestQuestions\Delete.cshtml" />
+    <Content Include="Views\TestQuestions\Details.cshtml" />
+    <Content Include="Views\TestQuestions\Edit.cshtml" />
+    <Content Include="Views\TestQuestions\Index.cshtml" />
+    <Content Include="Views\CourseTest\Create.cshtml" />
+    <Content Include="Views\CourseTest\Delete.cshtml" />
+    <Content Include="Views\CourseTest\Details.cshtml" />
+    <Content Include="Views\CourseTest\Edit.cshtml" />
+    <Content Include="Views\CourseTest\Index.cshtml" />
+    <Content Include="Views\ListAllTests\Create.cshtml" />
+    <Content Include="Views\ListAllTests\Delete.cshtml" />
+    <Content Include="Views\ListAllTests\Details.cshtml" />
+    <Content Include="Views\ListAllTests\Edit.cshtml" />
+    <Content Include="Views\ListAllTests\Index.cshtml" />
+    <Content Include="Views\ApplicationUsers\Index.cshtml" />
+    <Content Include="Views\TakeTest\TakeTest.cshtml" />
+    <Content Include="Views\TakeTest\EmptyTest.cshtml" />
+    <Content Include="Views\PassTheTests\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

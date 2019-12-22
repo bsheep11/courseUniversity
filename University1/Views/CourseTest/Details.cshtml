@@ -1,0 +1,45 @@
+﻿@model University1.Test
+
+@{
+    ViewBag.Title = "Подробнее";
+}
+
+<h2>Подробнее</h2>
+
+<div>
+    <h4>Тест</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Название теста
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TestName)
+        </dd>
+
+        <dt>
+            Название курса
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Сourse.Name)
+        </dd>
+
+    </dl>
+</div>
+@if (User.IsInRole("Teacher") || User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Вопросы", "Index", "TestQuestions", new {id = Model.Id}, null) |
+        @Html.ActionLink("Редактировать", "Edit", new {id = Model.Id}) |
+        @Html.ActionLink("Вернуться к списку", "Index", new {id = Model.CourseID})
+    </p>
+}
+else
+{
+<p>
+    @Html.ActionLink("Вопросы", "Index", "TestQuestions", new { id = Model.Id }, null) |
+    @Html.ActionLink("Вернуться к списку", "Index", new { id = Model.CourseID })
+</p>
+}

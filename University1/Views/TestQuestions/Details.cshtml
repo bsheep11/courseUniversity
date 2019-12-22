@@ -1,0 +1,66 @@
+﻿@model University1.TestQuestions
+
+@{
+    ViewBag.Title = "Подробнее";
+}
+
+<h2>Подробнее</h2>
+
+<div>
+    <h4>Вопрос</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Вопрос
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Question)
+        </dd>
+
+        <dt>
+            Правильный ответ
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrueAns)
+        </dd>
+
+        <dt>
+            Второй ответ
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ans2)
+        </dd>
+
+        <dt>
+            Третий ответ
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ans3)
+        </dd>
+
+        <dt>
+            Четвертый ответ
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ans4)
+        </dd>
+
+        <dt>
+            Название теста
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Test.TestName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Вернуться к списку", "Index", new { id = Model.TestID })
+</p>

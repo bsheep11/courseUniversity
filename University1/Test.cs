@@ -12,23 +12,23 @@ namespace University1
     using System;
     using System.Collections.Generic;
     
-    public partial class Сourse
+    public partial class Test
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Сourse()
+        public Test()
         {
-            this.Record = new HashSet<Record>();
-            this.Test = new HashSet<Test>();
+            this.TestQuestions = new HashSet<TestQuestions>();
+            this.PassTheTest = new HashSet<PassTheTest>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int TeacherID { get; set; }
+        public string TestName { get; set; }
+        public int CourseID { get; set; }
     
-        public virtual Teacher Teacher { get; set; }
+        public virtual Сourse Сourse { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Record> Record { get; set; }
+        public virtual ICollection<TestQuestions> TestQuestions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Test> Test { get; set; }
+        public virtual ICollection<PassTheTest> PassTheTest { get; set; }
     }
 }

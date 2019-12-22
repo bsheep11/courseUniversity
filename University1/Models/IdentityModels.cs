@@ -29,5 +29,11 @@ namespace University1.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<University1.TestQuestions> TestQuestions { get; set; }
+
+        public System.Data.Entity.DbSet<University1.Test> Tests { get; set; }
+
+        //public System.Data.Entity.DbSet<University1.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }

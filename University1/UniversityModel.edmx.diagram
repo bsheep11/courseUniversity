@@ -5,13 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="22ecda0f3a2e425882af0ef089f79e54" Name="Diagram1">
-        <EntityTypeShape EntityType="universityModel.Student" Width="1.5" PointX="3.375" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="universityModel.Student" Width="1.5" PointX="1" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="universityModel.Teacher" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="universityModel.Сourse" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="universityModel.FK_Сourse_ToTable" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="universityModel.Record" Width="1.5" PointX="5.75" PointY="2.25" />
+        <EntityTypeShape EntityType="universityModel.Record" Width="1.5" PointX="3.25" PointY="4.875" />
         <AssociationConnector Association="universityModel.FK_Record_ToStudentID" />
         <AssociationConnector Association="universityModel.FK_Record_ToCourseID" />
+        <EntityTypeShape EntityType="universityModel.Test" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="universityModel.TestQuestions" Width="1.5" PointX="7.75" PointY="0.875" />
+        <AssociationConnector Association="universityModel.FK_Record_ToCourseID_2" />
+        <AssociationConnector Association="universityModel.FK_Record_ToTestID" />
+        <EntityTypeShape EntityType="universityModel.PassTheTest" Width="1.5" PointX="7.5" PointY="4.25" />
+        <AssociationConnector Association="universityModel.FK_PassTheTest_ToStudent" />
+        <AssociationConnector Association="universityModel.FK_PassTheTest_ToTest" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

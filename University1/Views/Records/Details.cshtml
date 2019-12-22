@@ -10,13 +10,6 @@
     <h4>Запись</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            Завершен
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Passed)
-        </dd>
 
         <dt>
             Имя студента
@@ -36,7 +29,18 @@
 
     </dl>
 </div>
+@if (User.IsInRole("Teacher") || User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Вернуться к списку", "Index")
+    </p>
+}
+else
+{
 <p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Вернуться к списку", "Index")
+    @Html.ActionLink("Тесты", "Index", "CourseTest", new { id = Model.CourseID }, null) |
+    @Html.ActionLink("Вернуться к списку", "Index", new { id = Model.StudentID, isStudent = true }, null)
 </p>
+}
+}

@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Хранилище universityModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PassTheTest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="TestID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Record">
           <Key>
             <PropertyRef Name="Id" />
@@ -12,7 +20,6 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentID" Type="int" Nullable="false" />
           <Property Name="CourseID" Type="int" Nullable="false" />
-          <Property Name="Passed" Type="bit" />
         </EntityType>
         <EntityType Name="Student">
           <Key>
@@ -33,6 +40,26 @@
           <Property Name="Telephone" Type="nvarchar" MaxLength="50" />
           <Property Name="UserID" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CourseID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestQuestions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Question" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TrueAns" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ans2" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ans3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ans4" Type="nvarchar" MaxLength="50" />
+          <Property Name="TestID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Сourse">
           <Key>
             <PropertyRef Name="Id" />
@@ -41,6 +68,30 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="TeacherID" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_PassTheTest_ToStudent">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="PassTheTest" Type="Self.PassTheTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PassTheTest">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassTheTest_ToTest">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="PassTheTest" Type="Self.PassTheTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PassTheTest">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Record_ToCourseID">
           <End Role="Сourse" Type="Self.Сourse" Multiplicity="1" />
           <End Role="Record" Type="Self.Record" Multiplicity="*" />
@@ -49,6 +100,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Record">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_ToCourseID_2">
+          <End Role="Сourse" Type="Self.Сourse" Multiplicity="1" />
+          <End Role="Test" Type="Self.Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Сourse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Test">
               <PropertyRef Name="CourseID" />
             </Dependent>
           </ReferentialConstraint>
@@ -65,6 +128,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Record_ToTestID">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="TestQuestions" Type="Self.TestQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestQuestions">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Сourse_ToTable">
           <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
           <End Role="Сourse" Type="Self.Сourse" Multiplicity="*" />
@@ -78,17 +153,36 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Хранилище universityModelContainer">
+          <EntitySet Name="PassTheTest" EntityType="Self.PassTheTest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Record" EntityType="Self.Record" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestQuestions" EntityType="Self.TestQuestions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Сourse" EntityType="Self.Сourse" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PassTheTest_ToStudent" Association="Self.FK_PassTheTest_ToStudent">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="PassTheTest" EntitySet="PassTheTest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassTheTest_ToTest" Association="Self.FK_PassTheTest_ToTest">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="PassTheTest" EntitySet="PassTheTest" />
+          </AssociationSet>
           <AssociationSet Name="FK_Record_ToCourseID" Association="Self.FK_Record_ToCourseID">
             <End Role="Сourse" EntitySet="Сourse" />
             <End Role="Record" EntitySet="Record" />
           </AssociationSet>
+          <AssociationSet Name="FK_Record_ToCourseID_2" Association="Self.FK_Record_ToCourseID_2">
+            <End Role="Сourse" EntitySet="Сourse" />
+            <End Role="Test" EntitySet="Test" />
+          </AssociationSet>
           <AssociationSet Name="FK_Record_ToStudentID" Association="Self.FK_Record_ToStudentID">
             <End Role="Student" EntitySet="Student" />
             <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_ToTestID" Association="Self.FK_Record_ToTestID">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="TestQuestions" EntitySet="TestQuestions" />
           </AssociationSet>
           <AssociationSet Name="FK_Сourse_ToTable" Association="Self.FK_Сourse_ToTable">
             <End Role="Teacher" EntitySet="Teacher" />
@@ -109,6 +203,7 @@
           <Property Name="Age" Type="Int32" />
           <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Record" Relationship="universityModel.FK_Record_ToStudentID" FromRole="Student" ToRole="Record" />
+          <NavigationProperty Name="PassTheTest" Relationship="universityModel.FK_PassTheTest_ToStudent" FromRole="Student" ToRole="PassTheTest" />
         </EntityType>
         <EntityType Name="Teacher">
           <Key>
@@ -129,6 +224,7 @@
           <Property Name="TeacherID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Teacher" Relationship="Self.FK_Сourse_ToTable" FromRole="Сourse" ToRole="Teacher" />
           <NavigationProperty Name="Record" Relationship="universityModel.FK_Record_ToCourseID" FromRole="Сourse" ToRole="Record" />
+          <NavigationProperty Name="Test" Relationship="universityModel.FK_Record_ToCourseID_2" FromRole="Сourse" ToRole="Test" />
         </EntityType>
         <Association Name="FK_Сourse_ToTable">
           <End Role="Teacher" Type="Self.Teacher" Multiplicity="1" />
@@ -159,6 +255,25 @@
             <End Role="Сourse" EntitySet="Сourse" />
             <End Role="Record" EntitySet="Record" />
           </AssociationSet>
+          <EntitySet Name="Test" EntityType="universityModel.Test" />
+          <EntitySet Name="TestQuestions" EntityType="universityModel.TestQuestions" />
+          <AssociationSet Name="FK_Record_ToCourseID_2" Association="universityModel.FK_Record_ToCourseID_2">
+            <End Role="Сourse" EntitySet="Сourse" />
+            <End Role="Test" EntitySet="Test" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_ToTestID" Association="universityModel.FK_Record_ToTestID">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="TestQuestions" EntitySet="TestQuestions" />
+          </AssociationSet>
+          <EntitySet Name="PassTheTest" EntityType="universityModel.PassTheTest" />
+          <AssociationSet Name="FK_PassTheTest_ToStudent" Association="universityModel.FK_PassTheTest_ToStudent">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="PassTheTest" EntitySet="PassTheTest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PassTheTest_ToTest" Association="universityModel.FK_PassTheTest_ToTest">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="PassTheTest" EntitySet="PassTheTest" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Record">
           <Key>
@@ -167,7 +282,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StudentID" Type="Int32" Nullable="false" />
           <Property Name="CourseID" Type="Int32" Nullable="false" />
-          <Property Name="Passed" Type="Boolean" />
           <NavigationProperty Name="Student" Relationship="universityModel.FK_Record_ToStudentID" FromRole="Record" ToRole="Student" />
           <NavigationProperty Name="Сourse" Relationship="universityModel.FK_Record_ToCourseID" FromRole="Record" ToRole="Сourse" />
         </EntityType>
@@ -192,6 +306,88 @@
             </Principal>
             <Dependent Role="Record">
               <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Сourse" Relationship="universityModel.FK_Record_ToCourseID_2" FromRole="Test" ToRole="Сourse" />
+          <NavigationProperty Name="TestQuestions" Relationship="universityModel.FK_Record_ToTestID" FromRole="Test" ToRole="TestQuestions" />
+          <NavigationProperty Name="PassTheTest" Relationship="universityModel.FK_PassTheTest_ToTest" FromRole="Test" ToRole="PassTheTest" />
+        </EntityType>
+        <EntityType Name="TestQuestions">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Question" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TrueAns" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ans2" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ans3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ans4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TestID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Test" Relationship="universityModel.FK_Record_ToTestID" FromRole="TestQuestions" ToRole="Test" />
+        </EntityType>
+        <Association Name="FK_Record_ToCourseID_2">
+          <End Type="universityModel.Сourse" Role="Сourse" Multiplicity="1" />
+          <End Type="universityModel.Test" Role="Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Сourse">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_ToTestID">
+          <End Type="universityModel.Test" Role="Test" Multiplicity="1" />
+          <End Type="universityModel.TestQuestions" Role="TestQuestions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TestQuestions">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PassTheTest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="TestID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Student" Relationship="universityModel.FK_PassTheTest_ToStudent" FromRole="PassTheTest" ToRole="Student" />
+          <NavigationProperty Name="Test" Relationship="universityModel.FK_PassTheTest_ToTest" FromRole="PassTheTest" ToRole="Test" />
+        </EntityType>
+        <Association Name="FK_PassTheTest_ToStudent">
+          <End Type="universityModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="universityModel.PassTheTest" Role="PassTheTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PassTheTest">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PassTheTest_ToTest">
+          <End Type="universityModel.Test" Role="Test" Multiplicity="1" />
+          <End Type="universityModel.PassTheTest" Role="PassTheTest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PassTheTest">
+              <PropertyRef Name="TestID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -234,8 +430,38 @@
           <EntitySetMapping Name="Record">
             <EntityTypeMapping TypeName="universityModel.Record">
               <MappingFragment StoreEntitySet="Record">
-                <ScalarProperty Name="Passed" ColumnName="Passed" />
                 <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Test">
+            <EntityTypeMapping TypeName="universityModel.Test">
+              <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="TestName" ColumnName="TestName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestQuestions">
+            <EntityTypeMapping TypeName="universityModel.TestQuestions">
+              <MappingFragment StoreEntitySet="TestQuestions">
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="Ans4" ColumnName="Ans4" />
+                <ScalarProperty Name="Ans3" ColumnName="Ans3" />
+                <ScalarProperty Name="Ans2" ColumnName="Ans2" />
+                <ScalarProperty Name="TrueAns" ColumnName="TrueAns" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PassTheTest">
+            <EntityTypeMapping TypeName="universityModel.PassTheTest">
+              <MappingFragment StoreEntitySet="PassTheTest">
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

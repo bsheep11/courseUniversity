@@ -1,0 +1,31 @@
+﻿@model IEnumerable<University1.PassTheTest>
+
+@{
+    ViewBag.Title = "Пройденные тесты";
+}
+
+<h2>Пройденные тесты</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Студент
+        </th>
+        <th>
+            Название теста
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Student.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Test.TestName)
+        </td>
+    </tr>
+}
+
+</table>

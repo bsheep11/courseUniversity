@@ -29,5 +29,8 @@ namespace University1
         public virtual DbSet<Teacher> Teacher { get; set; }
         public virtual DbSet<Сourse> Сourse { get; set; }
         public virtual DbSet<Record> Record { get; set; }
+        public virtual DbSet<Test> Test { get; set; }
+        public virtual DbSet<TestQuestions> TestQuestions { get; set; }
+        public virtual DbSet<PassTheTest> PassTheTest { get; set; }
     }
 }

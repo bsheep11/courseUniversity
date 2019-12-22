@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Главная страница";
 }
+
 @if (User.IsInRole("Admin") || User.IsInRole("Student") || User.IsInRole("Teacher"))
 {
     <div class="jumbotron">
@@ -9,23 +10,50 @@
         <p><a href="~/Course" class="btn btn-primary btn-lg">Перейти &raquo;</a></p>
     </div>
 
-    if (User.IsInRole("Teacher") || User.IsInRole("Admin"))
+    if (User.IsInRole("Student"))
     {
         <div class="row">
             <div class="col-md-4">
-                <h2>Страница записей</h2>
+                <h2>Мои курсы</h2>
                 <p>
-
+                    Перейти к списку активных курсов
                 </p>
-                <p><a class="btn btn-default" href="~/Records">Перейти &raquo;</a></p>
+                <p>
+                    @Html.ActionLink("Перейти »", "Index", "Records", new { studentId = ViewBag.studentId, isStudent = true }, new { @class = "btn btn-default" })
+                </p>
             </div>
         </div>
     }
 
+    if (User.IsInRole("Teacher") || User.IsInRole("Admin"))
+    {
+<div class="row">
+    <div class="col-md-4">
+        <h2>Страница записей</h2>
+        <p>
+
+        </p>
+        <p><a class="btn btn-default" href="~/Records">Перейти &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Страница всех тестов</h2>
+        <p>
+
+        </p>
+        <p><a class="btn btn-default" href="~/ListAllTests">Перейти &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Пройденные тесты</h2>
+        <p>
+
+        </p>
+        <p><a class="btn btn-default" href="~/PassTheTests">Перейти &raquo;</a></p>
+    </div>
+</div>
+    }
+
     if (User.IsInRole("Admin"))
     {
-        <li>Only the admin can see this menu item</li>
-
         <div class="row">
             <div class="col-md-4">
                 <h2>Страница студентов</h2>
@@ -41,9 +69,20 @@
                 </p>
                 <p><a class="btn btn-default" href="~/Teachers">Перейти &raquo;</a></p>
             </div>
+            <div class="col-md-4">
+                <h2>Пользователи</h2>
+                <p>
+
+                </p>
+                <p><a class="btn btn-default" href="~/ApplicationUsers">Перейти &raquo;</a></p>
+            </div>
         </div>
     }
 
+}
+else
+{
+    <h1>Авторизуйтесь, чтобы просматривать контент.</h1>
 }
 
 

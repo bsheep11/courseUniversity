@@ -1,4 +1,5 @@
-﻿@model University1.Сourse
+﻿@using University1.Controllers
+@model University1.Сourse
 
 @{
     ViewBag.Title = "Подробнее";
@@ -28,7 +29,17 @@
 
     </dl>
 </div>
+@if (User.IsInRole("Teacher") || User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Тесты", "Index", "CourseTest", new {id = Model.Id}, null) |
+        @Html.ActionLink("Редактировать", "Edit", new {id = Model.Id}) |
+        @Html.ActionLink("Вернуться к списку", "Index")
+    </p>
+}
+else
+{
 <p>
-    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Вернуться к списку", "Index")
 </p>
+}

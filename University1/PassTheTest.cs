@@ -12,13 +12,13 @@ namespace University1
     using System;
     using System.Collections.Generic;
     
-    public partial class Record
+    public partial class PassTheTest
     {
         public int Id { get; set; }
         public int StudentID { get; set; }
-        public int CourseID { get; set; }
+        public int TestID { get; set; }
     
         public virtual Student Student { get; set; }
-        public virtual Сourse Сourse { get; set; }
+        public virtual Test Test { get; set; }
     }
 }

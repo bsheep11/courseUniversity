@@ -11,129 +11,120 @@ using University1;
 
 namespace University1.Controllers
 {
-    [Authorize(Roles = "Admin, Teacher, Student")]
-    public class CourseController : Controller
+    [Authorize(Roles = "Admin, Teacher")]
+    public class TestQuestionsController : Controller
     {
         private universityEntities db = new universityEntities();
 
-        // GET: Course
-        public async Task<ActionResult> Index()
+        // GET: TestQuestions
+        public async Task<ActionResult> Index(int? id)
         {
-            var Course = db.Сourse.Include(с => с.Teacher);
-            return View(await Course.ToListAsync());
+            var testQuestions = db.TestQuestions.Include(t => t.Test)
+                .Where(t => t.TestID == id);
+            Test test = await db.Test.FindAsync(id);
+            ViewBag.testID = id;
+            ViewBag.testName = test.TestName;
+            return View(await testQuestions.ToListAsync());
         }
 
-        // GET: Сourse/Details/5
+        // GET: TestQuestions/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Сourse Course = await db.Сourse.FindAsync(id);
-            if (Course == null)
+            TestQuestions testQuestions = await db.TestQuestions.FindAsync(id);
+            if (testQuestions == null)
             {
                 return HttpNotFound();
             }
-            return View(Course);
+            return View(testQuestions);
         }
 
-        // GET: Сourse/Create
-        [Authorize(Roles = "Admin, Teacher")]
-        public ActionResult Create()
+        // GET: TestQuestions/Create
+        public ActionResult Create(int? id)
         {
-            ViewBag.TeacherID = new SelectList(db.Teacher, "Id", "Name");
+            @ViewBag.currID = id;
+            ViewBag.TestID = new SelectList(db.Test, "Id", "TestName", id);
             return View();
         }
 
-        // POST: Сourse/Create
+        // POST: TestQuestions/Create
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin, Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,TeacherID")] Сourse Course)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Question,TrueAns,Ans2,Ans3,Ans4,TestID")] TestQuestions testQuestions)
         {
             if (ModelState.IsValid)
             {
-                db.Сourse.Add(Course);
+                db.TestQuestions.Add(testQuestions);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = testQuestions.TestID });
             }
 
-            ViewBag.TeacherID = new SelectList(db.Teacher, "Id", "Name", Course.TeacherID);
-            return View(Course);
+            ViewBag.TestID = new SelectList(db.Test, "Id", "TestName");
+            return View(testQuestions);
         }
 
-        // GET: Сourse/Edit/5
-        [Authorize(Roles = "Admin, Teacher")]
+        // GET: TestQuestions/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Сourse Course = await db.Сourse.FindAsync(id);
-            if (Course == null)
+            TestQuestions testQuestions = await db.TestQuestions.FindAsync(id);
+            if (testQuestions == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.TeacherID = new SelectList(db.Teacher, "Id", "Name", Course.TeacherID);
-            return View(Course);
+            ViewBag.TestID = new SelectList(db.Test, "Id", "TestName", testQuestions.TestID);
+            return View(testQuestions);
         }
 
-        // POST: Сourse/Edit/5
+        // POST: TestQuestions/Edit/5
         // Чтобы защититься от атак чрезмерной передачи данных, включите определенные свойства, для которых следует установить привязку. Дополнительные 
         // сведения см. в статье https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin, Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,TeacherID")] Сourse Course)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Question,TrueAns,Ans2,Ans3,Ans4,TestID")] TestQuestions testQuestions)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(Course).State = EntityState.Modified;
+                db.Entry(testQuestions).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new { id = testQuestions.TestID });
             }
-            ViewBag.TeacherID = new SelectList(db.Teacher, "Id", "Name", Course.TeacherID);
-            return View(Course);
+            ViewBag.TestID = new SelectList(db.Test, "Id", "TestName", testQuestions.TestID);
+            return View(testQuestions);
         }
 
-        // GET: Сourse/Delete/5
-        [Authorize(Roles = "Admin, Teacher")]
+        // GET: TestQuestions/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Сourse Course = await db.Сourse.FindAsync(id);
-            if (Course == null)
+            TestQuestions testQuestions = await db.TestQuestions.FindAsync(id);
+            if (testQuestions == null)
             {
                 return HttpNotFound();
             }
-            return View(Course);
+            return View(testQuestions);
         }
 
-        // POST: Сourse/Delete/5
-        [Authorize(Roles = "Admin, Teacher")]
+        // POST: TestQuestions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            try
-            {
-                Сourse Course = await db.Сourse.FindAsync(id);
-                db.Сourse.Remove(Course);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                return RedirectToAction("Index");
-            }
-            
+            TestQuestions testQuestions = await db.TestQuestions.FindAsync(id);
+            db.TestQuestions.Remove(testQuestions);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index", new { id = testQuestions.TestID });
         }
 
         protected override void Dispose(bool disposing)
@@ -145,6 +136,4 @@ namespace University1.Controllers
             base.Dispose(disposing);
         }
     }
-
-
 }

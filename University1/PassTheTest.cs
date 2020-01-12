@@ -17,7 +17,6 @@ namespace University1
         public int Id { get; set; }
         public int StudentID { get; set; }
         public int TestID { get; set; }
-    
         public virtual Student Student { get; set; }
         public virtual Test Test { get; set; }
     }

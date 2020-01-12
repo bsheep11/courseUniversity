@@ -21,8 +21,6 @@ namespace University1.Controllers
             var passTheTest = db.PassTheTest.Include(p => p.Student).Include(p => p.Test);
             return View(await passTheTest.ToListAsync());
         }
-
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)
